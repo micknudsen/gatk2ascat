@@ -18,7 +18,10 @@ class TestSegmentsParser(unittest.TestCase):
                   '\t'.join(['chr2', '100', '200', '-1.7'])]
 
         segementation = parse_segments(stream=stream)
+
         self.assertEqual(segementation._segments['chr1'],
                          [Segment(chromosome='chr1', start=100, end=200, logr=0.1),
-                          Segment(chromosome='chr1', start=500, end=750, logr=3.4),
-                          Segment(chromosome='chr2', start=100, end=200, logr=-1.7)])
+                          Segment(chromosome='chr1', start=500, end=750, logr=3.4)])
+
+        self.assertEqual(segementation._segments['chr2'],
+                         [Segment(chromosome='chr2', start=100, end=200, logr=-1.7)])
