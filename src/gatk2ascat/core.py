@@ -1,3 +1,4 @@
+from typing import Iterable
 from typing import NamedTuple
 
 
@@ -9,4 +10,6 @@ class Segment(NamedTuple):
 
 
 class Segmentation:
-    pass
+
+    def __init__(self, segments: Iterable[Segment]) -> None:
+        pass
