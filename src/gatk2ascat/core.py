@@ -19,3 +19,6 @@ class Segmentation:
         self._segments: DefaultDict[str, List[Segment]] = defaultdict(list)
         for segment in segments:
             self._segments[segment.chromosome].append(segment)
+
+    def logr(self, chromosome: str, position: int) -> float:
+        pass
