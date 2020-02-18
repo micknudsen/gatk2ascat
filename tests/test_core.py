@@ -29,10 +29,10 @@ class TestSegmentation(unittest.TestCase):
         self.assertEqual(self.segmentation._segments['chr2'], [self.segment_2a])
 
     def test_get_logr_for_covered_position(self):
-        self.assertEqual(self.segmentation.logr(chromosome='chr1', position='100'), 0.5)
-        self.assertEqual(self.segmentation.logr(chromosome='chr1', position='200'), 0.5)
-        self.assertEqual(self.segmentation.logr(chromosome='chr1', position='300'), 1.2)
-        self.assertEqual(self.segmentation.logr(chromosome='chr2', position='400'), -0.7)
+        self.assertEqual(self.segmentation.logr(chromosome='chr1', position=100), 0.5)
+        self.assertEqual(self.segmentation.logr(chromosome='chr1', position=200), 0.5)
+        self.assertEqual(self.segmentation.logr(chromosome='chr1', position=300), 1.2)
+        self.assertEqual(self.segmentation.logr(chromosome='chr2', position=400), -0.7)
 
     def test_get_logr_for_uncovered_position_raises_exception(self):
         with self.assertRaises(UncoveredPositionError):
