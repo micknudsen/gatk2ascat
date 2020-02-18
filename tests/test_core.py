@@ -3,7 +3,7 @@ import unittest
 from gatk2ascat.core import Segment
 
 
-class TestCore(unittest.TestCase):
+class TestSegment(unittest.TestCase):
 
     def test_segment(self):
         segment = Segment(chromosome='chr2', start=100, end=200, logr=0.5)
