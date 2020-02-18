@@ -6,3 +6,7 @@ class Segment(NamedTuple):
     start: int
     end: int
     logr: float
+
+
+class Segmentation:
+    pass
