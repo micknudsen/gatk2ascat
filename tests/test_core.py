@@ -25,3 +25,9 @@ class TestSegmentation(unittest.TestCase):
     def test_create_segmentation(self):
         self.assertEqual(self.segmentation._segments['chr1'], [self.segment_1a, self.segment_1b])
         self.assertEqual(self.segmentation._segments['chr2'], [self.segment_2a])
+
+    def test_get_logr(self):
+        self.assertEqual(self.segmentation.logr(chromosome='chr1', position='100'), 0.5)
+        self.assertEqual(self.segmentation.logr(chromosome='chr1', position='200'), 0.5)
+        self.assertEqual(self.segmentation.logr(chromosome='chr1', position='300'), 1.2)
+        self.assertEqual(self.segmentation.logr(chromosome='chr2', position='400'), -0.7)
