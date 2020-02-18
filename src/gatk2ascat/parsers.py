@@ -12,17 +12,24 @@ def parse_segments(stream: Iterable[str]) -> Segmentation:
 
     segments: List[Segment] = []
 
+    # Make sure not to try to parse column names line.
     skipped_column_names_line = False
+
     for line in stream:
+
+        # Skip the SAM-style header lines.
         if line.startswith('@'):
             continue
+
+        # This first line after the SAM-style header is the
+        # column names lines. Skip that one, too.
         if not skipped_column_names_line:
             skipped_column_names_line = True
             continue
+
+        # All remaining lines correspond to a segment.
         chromosome, start, end, logr = line.split('\t')
-        segments.append(Segment(chromosome=chromosome,
-                                start=int(start),
-                                end=int(end),
-                                logr=float(logr)))
+        segment = Segment(chromosome=chromosome, start=int(start), end=int(end), logr=float(logr))
+        segments.append(segment)
 
     return Segmentation(segments=segments)
