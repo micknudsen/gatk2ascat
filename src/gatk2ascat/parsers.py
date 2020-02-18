@@ -12,12 +12,12 @@ def parse_segments(stream: Iterable[str]) -> Segmentation:
 
     segments: List[Segment] = []
 
-    skipped_header = False
+    skipped_column_names_line = False
     for line in stream:
         if line.startswith('@'):
             continue
-        if not skipped_header:
-            skipped_header = True
+        if not skipped_column_names_line:
+            skipped_column_names_line = True
             continue
         chromosome, start, end, logr = line.split('\t')
         segments.append(Segment(chromosome=chromosome,
