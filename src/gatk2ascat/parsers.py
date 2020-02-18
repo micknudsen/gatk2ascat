@@ -6,6 +6,9 @@ from gatk2ascat.core import Segmentation
 
 
 def parse_segments(stream: Iterable[str]) -> Segmentation:
+    """Parses output from GATK DenoiseReadCounts, which is a SAM-style
+    header comprising lines starting with @ followed by single line
+    with column names (CONTIG, START, STOP, and LOG2_COPY_RATIO)."""
 
     segments: List[Segment] = []
 
