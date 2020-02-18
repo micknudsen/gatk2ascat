@@ -29,5 +29,7 @@ class Segmentation:
         raise UncoveredPositionError
 
 
-class SNP:
-    pass
+class SNP(NamedTuple):
+    chromosome: str
+    position: int
+    baf: float
