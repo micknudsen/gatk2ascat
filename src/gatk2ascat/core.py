@@ -5,6 +5,8 @@ from typing import Iterable
 from typing import List
 from typing import NamedTuple
 
+from gatk2ascat.exceptions import UncoveredPositionError
+
 
 class Segment(NamedTuple):
     chromosome: str
@@ -21,4 +23,7 @@ class Segmentation:
             self._segments[segment.chromosome].append(segment)
 
     def logr(self, chromosome: str, position: int) -> float:
-        pass
+        for segment in self._segments[chromosome]:
+            if segment.start <= position <= segment.end:
+                return segment.logr
+        raise UncoveredPositionError
