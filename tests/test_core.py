@@ -2,6 +2,7 @@ import unittest
 
 from gatk2ascat.core import Segment
 from gatk2ascat.core import Segmentation
+from gatk2ascat.core import SNP
 
 from gatk2ascat.exceptions import UncoveredPositionError
 
@@ -37,3 +38,12 @@ class TestSegmentation(unittest.TestCase):
     def test_get_logr_for_uncovered_position_raises_exception(self):
         with self.assertRaises(UncoveredPositionError):
             self.segmentation.logr(chromosome='chr2', position=100)
+
+
+class TestSNP(unittest.TestCase):
+
+    def test_snp(self):
+        snp = SNP(chromosome='chr1', position=100, baf=0.45)
+        self.assertEqual(snp.chromosome, 'chr1')
+        self.assertEqual(snp.position, 100)
+        self.assertEqual(snp.baf, 0.45)
