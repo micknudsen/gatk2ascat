@@ -1,4 +1,8 @@
-class Segment:
+from typing import NamedTuple
 
-    def __init__(self, chromosome: str, start: int, end: int, logr: float) -> None:
-        pass
+
+class Segment(NamedTuple):
+    chromosome: str
+    start: int
+    end: int
+    logr: float
