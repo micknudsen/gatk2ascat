@@ -1,0 +1,2 @@
+class UncoveredPositionError(Exception):
+    pass
