@@ -27,3 +27,7 @@ class Segmentation:
             if segment.start <= position <= segment.end:
                 return segment.logr
         raise UncoveredPositionError
+
+
+class SNP:
+    pass
