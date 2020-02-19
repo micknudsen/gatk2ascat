@@ -2,8 +2,11 @@ from collections import defaultdict
 
 from typing import DefaultDict
 from typing import Iterable
+from typing import Iterator
 from typing import List
 from typing import NamedTuple
+from typing import Optional
+from typing import Tuple
 
 from gatk2ascat.exceptions import UncoveredPositionError
 
@@ -42,3 +45,7 @@ class Segmentation:
             if segment.start <= position <= segment.end:
                 return segment.logr
         raise UncoveredPositionError
+
+
+def generate_ascat_input(bafs: List[BAF], segmentation: Optional[Segmentation] = None) -> Iterator[Tuple[ASCATDataPoint, ASCATDataPoint]]:
+    pass
