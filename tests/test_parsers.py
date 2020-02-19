@@ -28,14 +28,14 @@ class TestParsers(unittest.TestCase):
 
     def test_parse_segments(self):
 
-        stream = ['\t'.join(['@HD', 'VN:1.6']),
-                  '\t'.join(['@SQ', 'SN:chr1 LN:248956422']),
-                  '\t'.join(['@SQ', 'SN:chr2 LN:242193529']),
-                  '\t'.join(['@RG', 'ID:GATKCopyNumber', 'SM:TESTSAMPLE']),
-                  '\t'.join(['CONTIG', 'START', 'END', 'LOG2_COPY_RATIO']),
-                  '\t'.join(['chr1', '100', '200', '0.1']),
-                  '\t'.join(['chr1', '500', '750', '3.4']),
-                  '\t'.join(['chr2', '100', '200', '-1.7'])]
+        stream = iter(['\t'.join(['@HD', 'VN:1.6']),
+                       '\t'.join(['@SQ', 'SN:chr1 LN:248956422']),
+                       '\t'.join(['@SQ', 'SN:chr2 LN:242193529']),
+                       '\t'.join(['@RG', 'ID:GATKCopyNumber', 'SM:TESTSAMPLE']),
+                       '\t'.join(['CONTIG', 'START', 'END', 'LOG2_COPY_RATIO']),
+                       '\t'.join(['chr1', '100', '200', '0.1']),
+                       '\t'.join(['chr1', '500', '750', '3.4']),
+                       '\t'.join(['chr2', '100', '200', '-1.7'])])
 
         segementation = parse_segments(stream=stream)
 
@@ -48,14 +48,14 @@ class TestParsers(unittest.TestCase):
 
     def test_snp_parser(self):
 
-        stream = ['\t'.join(['@HD', 'VN:1.6']),
-                  '\t'.join(['@SQ', 'SN:chr1 LN:248956422']),
-                  '\t'.join(['@SQ', 'SN:chr2 LN:242193529']),
-                  '\t'.join(['@RG', 'ID:GATKCopyNumber', 'SM:TESTSAMPLE']),
-                  '\t'.join(['CONTIG', 'POSITION', 'REF_COUNT', 'ALT_COUNT', 'REF_NUCLEOTIDE', 'ALT_NUCLEOTIDE']),
-                  '\t'.join(['chr1', '150', '10', '90', 'A', 'G']),
-                  '\t'.join(['chr1', '700', '0', '30', 'T', 'C']),
-                  '\t'.join(['chr2', '100', '30', '50', 'G', 'A'])]
+        stream = iter(['\t'.join(['@HD', 'VN:1.6']),
+                       '\t'.join(['@SQ', 'SN:chr1 LN:248956422']),
+                       '\t'.join(['@SQ', 'SN:chr2 LN:242193529']),
+                       '\t'.join(['@RG', 'ID:GATKCopyNumber', 'SM:TESTSAMPLE']),
+                       '\t'.join(['CONTIG', 'POSITION', 'REF_COUNT', 'ALT_COUNT', 'REF_NUCLEOTIDE', 'ALT_NUCLEOTIDE']),
+                       '\t'.join(['chr1', '150', '10', '90', 'A', 'G']),
+                       '\t'.join(['chr1', '700', '0', '30', 'T', 'C']),
+                       '\t'.join(['chr2', '100', '30', '50', 'G', 'A'])])
 
         snps = parse_snps(stream=stream)
 
