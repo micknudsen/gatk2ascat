@@ -32,6 +32,10 @@ class TestSimpleStructures(unittest.TestCase):
         self.assertEqual(data_point.value, 3.2)
         self.assertEqual(data_point.name, 'chr1_100')
 
+    def test_ascat_data_point_string_representation(self):
+        data_point = ASCATDataPoint(chromosome='chr1', position=100, value=3.2)
+        self.assertEqual(data_point.__str__(), '\t'.join(['chr1_100', 'chr1', '100', '3.2']))
+
 
 class TestSegmentation(unittest.TestCase):
 
