@@ -1,9 +1,9 @@
 from typing import Iterator
 from typing import List
 
+from gatk2ascat.core import BAF
 from gatk2ascat.core import Segment
 from gatk2ascat.core import Segmentation
-from gatk2ascat.core import SNP
 
 
 def skip_header(stream: Iterator[str]) -> None:
@@ -34,17 +34,17 @@ def parse_segments(stream: Iterator[str]) -> Segmentation:
     return Segmentation(segments=segments)
 
 
-def parse_snps(stream: Iterator[str]) -> List[SNP]:
+def parse_bafs(stream: Iterator[str]) -> List[BAF]:
     """Parses allelic counts output from GATK ModelSegments, which is a SAM-style
      header comprising lines starting with @ followed by single line with column
      names (CONTIG, POSITION, REF_COUNT, ALT_COUNT, REF_NUCLEOTIDE, ALT_NUCLEOTIDE)."""
 
     skip_header(stream)
-    snps: List[SNP] = []
+    bafs: List[BAF] = []
 
     for line in stream:
         chromosome, position, ref_count, alt_count, *_ = line.split('\t')
-        snp = SNP(chromosome=chromosome, position=int(position), baf=float(alt_count) / (float(ref_count) + float(alt_count)))
-        snps.append(snp)
+        baf = BAF(chromosome=chromosome, position=int(position), frequency=float(alt_count) / (float(ref_count) + float(alt_count)))
+        bafs.append(baf)
 
-    return snps
+    return bafs

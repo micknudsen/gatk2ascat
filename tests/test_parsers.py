@@ -1,10 +1,10 @@
 import unittest
 
+from gatk2ascat.core import BAF
 from gatk2ascat.core import Segment
-from gatk2ascat.core import SNP
 
+from gatk2ascat.parsers import parse_bafs
 from gatk2ascat.parsers import parse_segments
-from gatk2ascat.parsers import parse_snps
 from gatk2ascat.parsers import skip_header
 
 
@@ -46,7 +46,7 @@ class TestParsers(unittest.TestCase):
         self.assertEqual(segementation._segments['chr2'],
                          [Segment(chromosome='chr2', start=100, end=200, logr=-1.7)])
 
-    def test_snp_parser(self):
+    def test_baf_parser(self):
 
         stream = iter(['\t'.join(['@HD', 'VN:1.6']),
                        '\t'.join(['@SQ', 'SN:chr1 LN:248956422']),
@@ -57,8 +57,8 @@ class TestParsers(unittest.TestCase):
                        '\t'.join(['chr1', '700', '0', '30', 'T', 'C']),
                        '\t'.join(['chr2', '100', '30', '50', 'G', 'A'])])
 
-        snps = parse_snps(stream=stream)
+        bafs = parse_bafs(stream=stream)
 
-        self.assertEqual(snps, [SNP(chromosome='chr1', position=150, baf=0.9),
-                                SNP(chromosome='chr1', position=700, baf=1.0),
-                                SNP(chromosome='chr2', position=100, baf=0.625)])
+        self.assertEqual(bafs, [BAF(chromosome='chr1', position=150, frequency=0.9),
+                                BAF(chromosome='chr1', position=700, frequency=1.0),
+                                BAF(chromosome='chr2', position=100, frequency=0.625)])

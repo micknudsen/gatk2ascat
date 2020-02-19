@@ -29,7 +29,7 @@ class Segmentation:
         raise UncoveredPositionError
 
 
-class SNP(NamedTuple):
+class BAF(NamedTuple):
     chromosome: str
     position: int
-    baf: float
+    frequency: float

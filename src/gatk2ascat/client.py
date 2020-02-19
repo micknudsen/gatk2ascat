@@ -1,7 +1,7 @@
 import argparse
 
+from gatk2ascat.parsers import parse_bafs
 from gatk2ascat.parsers import parse_segments
-from gatk2ascat.parsers import parse_snps
 
 
 def main():
@@ -25,21 +25,21 @@ def main():
         segmentation = parse_segments(stream=f)
 
     with open(args.allelic_counts_tumor, 'r') as f:
-        tumor_baf = parse_snps(stream=f)
+        tumor_bafs = parse_bafs(stream=f)
 
     with open(args.allelic_counts_normal, 'r') as f:
-        normal_baf = parse_snps(stream=f)
+        normal_bafs = parse_bafs(stream=f)
 
     with open(args.ascat_baf_tumor, 'w') as baf_file, open(args.ascat_logr_tumor, 'w') as logr_file:
 
         print('', 'chromosome', 'position', 'tumor', sep='\t', file=baf_file)
-        for snp in tumor_baf:
-            print(f'{snp.chromosome}_{snp.position}', snp.chromosome, snp.position, snp.baf, sep='\t', file=baf_file)
-            print(f'{snp.chromosome}_{snp.position}', snp.chromosome, snp.position, segmentation.logr(chromosome=snp.chromosome, position=snp.position), sep='\t', file=logr_file)
+        for baf in tumor_bafs:
+            print(f'{baf.chromosome}_{baf.position}', baf.chromosome, baf.position, baf.frequency, sep='\t', file=baf_file)
+            print(f'{baf.chromosome}_{baf.position}', baf.chromosome, baf.position, segmentation.logr(chromosome=baf.chromosome, position=baf.position), sep='\t', file=logr_file)
 
     with open(args.ascat_baf_normal, 'w') as baf_file, open(args.ascat_logr_normal, 'w') as logr_file:
 
         print('', 'chromosome', 'position', 'tumor', sep='\t', file=baf_file)
-        for snp in normal_baf:
-            print(f'{snp.chromosome}_{snp.position}', snp.chromosome, snp.position, snp.baf, sep='\t', file=baf_file)
-            print(f'{snp.chromosome}_{snp.position}', snp.chromosome, snp.position, '0.0', sep='\t', file=logr_file)
+        for baf in normal_bafs:
+            print(f'{baf.chromosome}_{baf.position}', baf.chromosome, baf.position, baf.frequency, sep='\t', file=baf_file)
+            print(f'{baf.chromosome}_{baf.position}', baf.chromosome, baf.position, '0.0', sep='\t', file=logr_file)
