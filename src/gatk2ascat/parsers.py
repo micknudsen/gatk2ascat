@@ -23,9 +23,8 @@ def parse_segments(stream: Iterator[str]) -> Segmentation:
     header comprising lines starting with @ followed by single line
     with column names (CONTIG, START, STOP, and LOG2_COPY_RATIO)."""
 
-    segments: List[Segment] = []
-
     skip_header(stream)
+    segments: List[Segment] = []
 
     for line in stream:
         chromosome, start, end, logr = line.split('\t')
@@ -40,14 +39,12 @@ def parse_snps(stream: Iterator[str]) -> List[SNP]:
      header comprising lines starting with @ followed by single line with column
      names (CONTIG, POSITION, REF_COUNT, ALT_COUNT, REF_NUCLEOTIDE, ALT_NUCLEOTIDE)."""
 
-    snps: List[SNP] = []
-
     skip_header(stream)
+    snps: List[SNP] = []
 
     for line in stream:
         chromosome, position, ref_count, alt_count, *_ = line.split('\t')
-        baf = float(alt_count) / (float(ref_count) + float(alt_count))
-        snp = SNP(chromosome=chromosome, position=int(position), baf=baf)
+        snp = SNP(chromosome=chromosome, position=int(position), baf=float(alt_count) / (float(ref_count) + float(alt_count)))
         snps.append(snp)
 
     return snps
