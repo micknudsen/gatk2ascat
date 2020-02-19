@@ -5,6 +5,8 @@ from gatk2ascat.core import BAF
 from gatk2ascat.core import Segment
 from gatk2ascat.core import Segmentation
 
+from gatk2ascat.exceptions import ReadGroupError
+
 
 def skip_header(stream: Iterator[str]) -> None:
     """Expecst an iterator of lines of GATK output. Fast-forwards the
@@ -48,3 +50,21 @@ def parse_bafs(stream: Iterator[str]) -> List[BAF]:
         bafs.append(baf)
 
     return bafs
+
+
+def get_sample_name(stream: Iterator[str]) -> str:
+
+    for line in stream:
+
+        if not line.startswith('@'):
+            break
+
+        else:
+            parts = line.strip().split('\t')
+            if parts[0] == '@RG':
+                read_group = {key: value for key, value in [part.split(':', 1) for part in parts[1:]]}
+                if 'SM' in read_group:
+                    return read_group['SM']
+            continue
+
+    raise ReadGroupError
