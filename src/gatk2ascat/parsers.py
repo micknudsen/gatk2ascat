@@ -8,13 +8,14 @@ from gatk2ascat.core import SNP
 
 
 def skip_header(stream: Iterator[str]) -> None:
-
+    """Expecst an iterator of lines of GATK output. Fast-forwards the
+    iterator by skipping the SAM-style header comprising lines starting
+    with @ and the following line, which contains column names."""
     for line in stream:
-
         # Skip the SAM-style header lines.
         if line.startswith('@'):
             continue
-
+        # Now we have also skipped the column names line.
         break
 
 
