@@ -81,7 +81,7 @@ class TestOutputGenerator(unittest.TestCase):
 
         for baf_entry, logr_entry in generator:
             ascat_baf.append(baf_entry)
-            ascat_logr.append(baf_entry)
+            ascat_logr.append(logr_entry)
 
         self.assertEqual(ascat_baf, [ASCATDataPoint(chromosome='chr1', position=150, value=0.2),
                                      ASCATDataPoint(chromosome='chr1', position=175, value=0.15),
