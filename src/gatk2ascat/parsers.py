@@ -37,4 +37,28 @@ def parse_segments(stream: Iterable[str]) -> Segmentation:
 
 
 def parse_snps(stream: Iterable[str]) -> List[SNP]:
-    pass
+
+    snps: List[SNP] = []
+
+    # Make sure not to try to parse column names line.
+    skipped_column_names_line = False
+
+    for line in stream:
+
+        # Skip the SAM-style header lines.
+        if line.startswith('@'):
+            continue
+
+        # This first line after the SAM-style header is the
+        # column names lines. Skip that one, too.
+        if not skipped_column_names_line:
+            skipped_column_names_line = True
+            continue
+
+        # All remaining lines correspond to a SNP.
+        chromosome, position, ref_count, alt_count, *_ = line.split('\t')
+        baf = float(alt_count) / (float(ref_count) + float(alt_count))
+        snp = SNP(chromosome=chromosome, position=int(position), baf=baf)
+        snps.append(snp)
+
+    return snps
