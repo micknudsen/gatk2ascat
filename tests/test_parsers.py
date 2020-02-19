@@ -3,9 +3,12 @@ import unittest
 from gatk2ascat.core import BAF
 from gatk2ascat.core import Segment
 
+from gatk2ascat.parsers import get_sample_name
 from gatk2ascat.parsers import parse_bafs
 from gatk2ascat.parsers import parse_segments
 from gatk2ascat.parsers import skip_header
+
+from gatk2ascat.exceptions import ReadGroupError
 
 
 class TestParsers(unittest.TestCase):
@@ -62,3 +65,29 @@ class TestParsers(unittest.TestCase):
         self.assertEqual(bafs, [BAF(chromosome='chr1', position=150, frequency=0.9),
                                 BAF(chromosome='chr1', position=700, frequency=1.0),
                                 BAF(chromosome='chr2', position=100, frequency=0.625)])
+
+    def test_get_sample_name(self):
+
+        stream = iter(['\t'.join(['@HD', 'VN:1.6']),
+                       '\t'.join(['@SQ', 'SN:chr1 LN:248956422']),
+                       '\t'.join(['@SQ', 'SN:chr2 LN:242193529']),
+                       '\t'.join(['@RG', 'ID:GATKCopyNumber', 'SM:TESTSAMPLE']),
+                       '\t'.join(['CONTIG', 'START', 'END', 'LOG2_COPY_RATIO']),
+                       '\t'.join(['chr1', '100', '200', '0.1']),
+                       '\t'.join(['chr1', '500', '750', '3.4']),
+                       '\t'.join(['chr2', '100', '200', '-1.7'])])
+
+        self.assertEqual(get_sample_name(stream=stream), 'TESTSAMPLE')
+
+    def test_get_sample_name_read_group_not_found(self):
+
+        stream = iter(['\t'.join(['@HD', 'VN:1.6']),
+                       '\t'.join(['@SQ', 'SN:chr1 LN:248956422']),
+                       '\t'.join(['@SQ', 'SN:chr2 LN:242193529']),
+                       '\t'.join(['CONTIG', 'START', 'END', 'LOG2_COPY_RATIO']),
+                       '\t'.join(['chr1', '100', '200', '0.1']),
+                       '\t'.join(['chr1', '500', '750', '3.4']),
+                       '\t'.join(['chr2', '100', '200', '-1.7'])])
+
+        with self.assertRaises(ReadGroupError):
+            get_sample_name(stream=stream)
