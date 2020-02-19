@@ -55,6 +55,9 @@ def generate_ascat_input(bafs: List[BAF], segmentation: Optional[Segmentation] =
 
     for baf in bafs:
 
-        logr = segmentation.logr(chromosome=baf.chromosome, position=baf.position) if segmentation else 0.0
+        if segmentation:
+            logr = segmentation.logr(chromosome=baf.chromosome, position=baf.position)
+        else:
+            logr = 0.0
 
         yield ASCATDataPoint(chromosome=baf.chromosome, position=baf.position, value=baf.frequency), ASCATDataPoint(chromosome=baf.chromosome, position=baf.position, value=logr)
