@@ -5,9 +5,26 @@ from gatk2ascat.core import SNP
 
 from gatk2ascat.parsers import parse_segments
 from gatk2ascat.parsers import parse_snps
+from gatk2ascat.parsers import skip_header
 
 
 class TestParsers(unittest.TestCase):
+
+    def test_skip_header(self):
+
+        stream = iter(['\t'.join(['@HD', 'VN:1.6']),
+                       '\t'.join(['@SQ', 'SN:chr1 LN:248956422']),
+                       '\t'.join(['@SQ', 'SN:chr2 LN:242193529']),
+                       '\t'.join(['@RG', 'ID:GATKCopyNumber', 'SM:TESTSAMPLE']),
+                       '\t'.join(['CONTIG', 'START', 'END', 'LOG2_COPY_RATIO']),
+                       '\t'.join(['chr1', '100', '200', '0.1']),
+                       '\t'.join(['chr1', '500', '750', '3.4']),
+                       '\t'.join(['chr2', '100', '200', '-1.7'])])
+
+        skip_header(stream)
+        self.assertEqual(list(stream), ['\t'.join(['chr1', '100', '200', '0.1']),
+                                        '\t'.join(['chr1', '500', '750', '3.4']),
+                                        '\t'.join(['chr2', '100', '200', '-1.7'])])
 
     def test_parse_segments(self):
 
