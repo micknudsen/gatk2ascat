@@ -74,19 +74,12 @@ class TestOutputGenerator(unittest.TestCase):
 
     def test_generate_ascat_input(self):
 
-        generator = generate_ascat_input(bafs=self.tumor_bafs, segmentation=self.segmentation)
+        ascat_baf, ascat_logr = zip(*generate_ascat_input(bafs=self.tumor_bafs, segmentation=self.segmentation))
 
-        ascat_baf = []
-        ascat_logr = []
-
-        for baf_entry, logr_entry in generator:
-            ascat_baf.append(baf_entry)
-            ascat_logr.append(logr_entry)
-
-        self.assertEqual(ascat_baf, [ASCATDataPoint(chromosome='chr1', position=150, value=0.2),
+        self.assertEqual(ascat_baf, (ASCATDataPoint(chromosome='chr1', position=150, value=0.2),
                                      ASCATDataPoint(chromosome='chr1', position=175, value=0.15),
-                                     ASCATDataPoint(chromosome='chr2', position=300, value=0.9)])
+                                     ASCATDataPoint(chromosome='chr2', position=300, value=0.9)))
 
-        self.assertEqual(ascat_logr, [ASCATDataPoint(chromosome='chr1', position=150, value=0.5),
+        self.assertEqual(ascat_logr, (ASCATDataPoint(chromosome='chr1', position=150, value=0.5),
                                       ASCATDataPoint(chromosome='chr1', position=175, value=0.5),
-                                      ASCATDataPoint(chromosome='chr2', position=300, value=-0.7)])
+                                      ASCATDataPoint(chromosome='chr2', position=300, value=-0.7)))
