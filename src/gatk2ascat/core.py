@@ -21,6 +21,15 @@ class Segment(NamedTuple):
     logr: float
 
 
+class ASCATDataPoint(NamedTuple):
+    chromosome: str
+    position: int
+    value: float
+
+    def name(self) -> str:
+        return self.chromosome + '_' + str(self.position)
+
+
 class Segmentation:
 
     def __init__(self, segments: Iterable[Segment]) -> None:
