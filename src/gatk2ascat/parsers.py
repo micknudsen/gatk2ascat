@@ -65,6 +65,5 @@ def get_sample_name(stream: Iterator[str]) -> str:
                 read_group = {key: value for key, value in [part.split(':', 1) for part in parts[1:]]}
                 if 'SM' in read_group:
                     return read_group['SM']
-            continue
 
     raise ReadGroupError
