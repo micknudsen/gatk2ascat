@@ -36,6 +36,9 @@ def parse_segments(stream: Iterator[str]) -> Segmentation:
 
 
 def parse_snps(stream: Iterator[str]) -> List[SNP]:
+    """Parses allelic counts output from GATK ModelSegments, which is a SAM-style
+     header comprising lines starting with @ followed by single line with column
+     names (CONTIG, POSITION, REF_COUNT, ALT_COUNT, REF_NUCLEOTIDE, ALT_NUCLEOTIDE)."""
 
     snps: List[SNP] = []
 
