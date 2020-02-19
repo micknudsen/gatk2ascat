@@ -58,12 +58,14 @@ def get_sample_name(stream: Iterator[str]) -> str:
 
     for line in stream:
 
+        # We have made it past the header. There is no point in continuing!
         if not line.startswith('@'):
             break
 
         else:
             parts = line.strip().split('\t')
             if parts[0] == '@RG':
+                # Read group information comprises entries on the form KEY:VALUE, and KEY for sample name is SM.
                 read_group = {key: value for key, value in [part.split(':', 1) for part in parts[1:]]}
                 if 'SM' in read_group:
                     return read_group['SM']
