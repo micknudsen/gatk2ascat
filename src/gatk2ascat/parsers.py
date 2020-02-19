@@ -1,4 +1,3 @@
-from typing import Iterable
 from typing import Iterator
 from typing import List
 
@@ -19,7 +18,7 @@ def skip_header(stream: Iterator[str]) -> None:
         break
 
 
-def parse_segments(stream: Iterable[str]) -> Segmentation:
+def parse_segments(stream: Iterator[str]) -> Segmentation:
     """Parses output from GATK DenoiseReadCounts, which is a SAM-style
     header comprising lines starting with @ followed by single line
     with column names (CONTIG, START, STOP, and LOG2_COPY_RATIO)."""
@@ -49,7 +48,7 @@ def parse_segments(stream: Iterable[str]) -> Segmentation:
     return Segmentation(segments=segments)
 
 
-def parse_snps(stream: Iterable[str]) -> List[SNP]:
+def parse_snps(stream: Iterator[str]) -> List[SNP]:
 
     snps: List[SNP] = []
 
