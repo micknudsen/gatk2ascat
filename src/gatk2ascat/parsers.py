@@ -53,6 +53,8 @@ def parse_bafs(stream: Iterator[str]) -> List[BAF]:
 
 
 def get_sample_name(stream: Iterator[str]) -> str:
+    """Finds line with read group information (the @RG tag) returns the sample name. Raises
+    a ReadGroupError, if no read group is found, or if sample name is not defined."""
 
     for line in stream:
 
