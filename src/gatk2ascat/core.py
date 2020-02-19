@@ -52,6 +52,9 @@ class Segmentation:
 
 
 def generate_ascat_input(bafs: List[BAF], segmentation: Optional[Segmentation] = None) -> Iterator[Tuple[ASCATDataPoint, ASCATDataPoint]]:
+    """Takes as input a list of BAF objects and an optional Segmentation object. Yields pairs
+    of ASCATDataPoint objects with BAFs and LOGRs. If a Segmentation object is provided, LOGR
+    values are determined from that. Otherwise, all LOGR value are set to 0.0."""
 
     for baf in bafs:
 
