@@ -1,9 +1,21 @@
 from typing import Iterable
+from typing import Iterator
 from typing import List
 
 from gatk2ascat.core import Segment
 from gatk2ascat.core import Segmentation
 from gatk2ascat.core import SNP
+
+
+def skip_header(stream: Iterator[str]) -> None:
+
+    for line in stream:
+
+        # Skip the SAM-style header lines.
+        if line.startswith('@'):
+            continue
+
+        break
 
 
 def parse_segments(stream: Iterable[str]) -> Segmentation:
