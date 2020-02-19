@@ -43,8 +43,8 @@ def main():
 
     with open(args.ascat_baf_normal, 'w') as baf_file, open(args.ascat_logr_normal, 'w') as logr_file:
 
-        print('', 'chromosome', 'position', 'tumor', sep='\t', file=baf_file)
-        print('', 'chromosome', 'position', 'tumor', sep='\t', file=logr_file)
+        print('', 'chromosome', 'position', 'normal', sep='\t', file=baf_file)
+        print('', 'chromosome', 'position', 'normal', sep='\t', file=logr_file)
 
         for baf_entry, logr_entry in generate_ascat_input(bafs=normal_bafs):
             print(baf_entry, file=baf_file)
