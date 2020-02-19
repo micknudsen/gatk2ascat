@@ -4,6 +4,8 @@ from gatk2ascat.core import BAF
 from gatk2ascat.core import Segment
 from gatk2ascat.core import Segmentation
 
+from gatk2ascat.core import generate_ascat_input
+
 from gatk2ascat.exceptions import UncoveredPositionError
 
 
@@ -47,3 +49,39 @@ class TestSegmentation(unittest.TestCase):
     def test_get_logr_for_uncovered_position_raises_exception(self):
         with self.assertRaises(UncoveredPositionError):
             self.segmentation.logr(chromosome='chr2', position=100)
+
+
+class TestOutputGenerator(unittest.TestCase):
+
+    def setUp(self):
+
+        self.segmentation = Segmentation(segments=[Segment(chromosome='chr1', start=100, end=200, logr=0.5),
+                                                   Segment(chromosome='chr1', start=201, end=350, logr=1.2),
+                                                   Segment(chromosome='chr2', start=150, end=400, logr=-0.7)])
+
+        self.tumor_bafs = [BAF(chromosome='chr1', position=150, frequency=0.2),
+                           BAF(chromosome='chr1', position=175, frequency=0.15),
+                           BAF(chromosome='chr2', position=300, frequency=0.9)]
+
+        self.normal_bafs = [BAF(chromosome='chr1', position=150, frequency=0.5),
+                            BAF(chromosome='chr1', position=175, frequency=0.55),
+                            BAF(chromosome='chr2', position=300, frequency=0.43)]
+
+    def test_generate_ascat_input(self):
+
+        generator = generate_ascat_input(bafs=self.tumor_bafs, segmentation=self.segmentation)
+
+        ascat_baf = []
+        ascat_logr = []
+
+        for baf_entry, logr_entry in zip(*generator):
+            ascat_baf.append(baf_entry)
+            ascat_logr.append(baf_entry)
+
+        self.assertEqual(ascat_baf, [['chr1_150', 'chr1', 150, 0.2],
+                                     ['chr1_175', 'chr1', 175, 0.15],
+                                     ['chr2_300', 'chr2', 300, 0.9]])
+
+        self.assertEqual(ascat_logr, [['chr1_150', 'chr1', 150, 0.5],
+                                      ['chr1_175', 'chr1', 175, 0.5],
+                                      ['chr2_300', 'chr2', 300, -0.7]])
