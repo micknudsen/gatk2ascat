@@ -1,5 +1,7 @@
 import argparse
 
+from gatk2ascat.core import generate_ascat_input
+
 from gatk2ascat.parsers import parse_bafs
 from gatk2ascat.parsers import parse_segments
 
@@ -33,13 +35,17 @@ def main():
     with open(args.ascat_baf_tumor, 'w') as baf_file, open(args.ascat_logr_tumor, 'w') as logr_file:
 
         print('', 'chromosome', 'position', 'tumor', sep='\t', file=baf_file)
-        for baf in tumor_bafs:
-            print(f'{baf.chromosome}_{baf.position}', baf.chromosome, baf.position, baf.frequency, sep='\t', file=baf_file)
-            print(f'{baf.chromosome}_{baf.position}', baf.chromosome, baf.position, segmentation.logr(chromosome=baf.chromosome, position=baf.position), sep='\t', file=logr_file)
+        print('', 'chromosome', 'position', 'tumor', sep='\t', file=logr_file)
+
+        for baf_entry, logr_entry in generate_ascat_input(bafs=tumor_bafs, segmentation=segmentation):
+            print(baf_entry, file=baf_file)
+            print(logr_entry, file=logr_file)
 
     with open(args.ascat_baf_normal, 'w') as baf_file, open(args.ascat_logr_normal, 'w') as logr_file:
 
         print('', 'chromosome', 'position', 'tumor', sep='\t', file=baf_file)
-        for baf in normal_bafs:
-            print(f'{baf.chromosome}_{baf.position}', baf.chromosome, baf.position, baf.frequency, sep='\t', file=baf_file)
-            print(f'{baf.chromosome}_{baf.position}', baf.chromosome, baf.position, '0.0', sep='\t', file=logr_file)
+        print('', 'chromosome', 'position', 'tumor', sep='\t', file=logr_file)
+
+        for baf_entry, logr_entry in generate_ascat_input(bafs=normal_bafs):
+            print(baf_entry, file=baf_file)
+            print(logr_entry, file=logr_file)
