@@ -1,10 +1,13 @@
 import unittest
 
 from gatk2ascat.core import Segment
+from gatk2ascat.core import SNP
+
 from gatk2ascat.parsers import parse_segments
+from gatk2ascat.parsers import parse_snps
 
 
-class TestSegmentsParser(unittest.TestCase):
+class TestParsers(unittest.TestCase):
 
     def test_parse_segments(self):
 
@@ -25,3 +28,20 @@ class TestSegmentsParser(unittest.TestCase):
 
         self.assertEqual(segementation._segments['chr2'],
                          [Segment(chromosome='chr2', start=100, end=200, logr=-1.7)])
+
+    def test_snp_parser(self):
+
+        stream = ['\t'.join(['@HD', 'VN:1.6']),
+                  '\t'.join(['@SQ', 'SN:chr1 LN:248956422']),
+                  '\t'.join(['@SQ', 'SN:chr2 LN:242193529']),
+                  '\t'.join(['@RG', 'ID:GATKCopyNumber', 'SM:TESTSAMPLE']),
+                  '\t'.join(['CONTIG', 'POSITION', 'REF_COUNT', 'ALT_COUNT', 'REF_NUCLEOTIDE', 'ALT_NUCLEOTIDE']),
+                  '\t'.join(['chr1', '150', '10', '90', 'A', 'G']),
+                  '\t'.join(['chr1', '700', '0', '30', 'T', 'C']),
+                  '\t'.join(['chr2', '100', '30', '50', 'G', 'A'])]
+
+        snps = parse_snps(stream=stream)
+
+        self.assertEqual(snps, [SNP(chromosome='chr1', position=150, baf=0.9),
+                                SNP(chromosome='chr1', position=700, baf=1.0),
+                                SNP(chromosome='chr2', position=100, baf=0.625)])
