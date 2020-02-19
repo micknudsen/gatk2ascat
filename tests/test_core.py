@@ -83,10 +83,10 @@ class TestOutputGenerator(unittest.TestCase):
             ascat_baf.append(baf_entry)
             ascat_logr.append(baf_entry)
 
-        self.assertEqual(ascat_baf, [['chr1_150', 'chr1', 150, 0.2],
-                                     ['chr1_175', 'chr1', 175, 0.15],
-                                     ['chr2_300', 'chr2', 300, 0.9]])
+        self.assertEqual(ascat_baf, [ASCATDataPoint(chromosome='chr1', position=150, value=0.2),
+                                     ASCATDataPoint(chromosome='chr1', position=175, value=0.15),
+                                     ASCATDataPoint(chromosime='chr2', position=300, value=0.9)])
 
-        self.assertEqual(ascat_logr, [['chr1_150', 'chr1', 150, 0.5],
-                                      ['chr1_175', 'chr1', 175, 0.5],
-                                      ['chr2_300', 'chr2', 300, -0.7]])
+        self.assertEqual(ascat_logr, [ASCATDataPoint(chromosome='chr1', position=150, value=0.5),
+                                      ASCATDataPoint(chromosome='chr1', position=175, value=0.5),
+                                      ASCATDataPoint(chromosime='chr2', position=300, value=-0.7)])
