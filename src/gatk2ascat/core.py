@@ -8,6 +8,12 @@ from typing import NamedTuple
 from gatk2ascat.exceptions import UncoveredPositionError
 
 
+class BAF(NamedTuple):
+    chromosome: str
+    position: int
+    frequency: float
+
+
 class Segment(NamedTuple):
     chromosome: str
     start: int
@@ -27,9 +33,3 @@ class Segmentation:
             if segment.start <= position <= segment.end:
                 return segment.logr
         raise UncoveredPositionError
-
-
-class BAF(NamedTuple):
-    chromosome: str
-    position: int
-    frequency: float

@@ -7,6 +7,15 @@ from gatk2ascat.core import Segmentation
 from gatk2ascat.exceptions import UncoveredPositionError
 
 
+class TestBAF(unittest.TestCase):
+
+    def test_baf(self):
+        baf = BAF(chromosome='chr1', position=100, frequency=0.45)
+        self.assertEqual(baf.chromosome, 'chr1')
+        self.assertEqual(baf.position, 100)
+        self.assertEqual(baf.frequency, 0.45)
+
+
 class TestSegment(unittest.TestCase):
 
     def test_segment(self):
@@ -38,12 +47,3 @@ class TestSegmentation(unittest.TestCase):
     def test_get_logr_for_uncovered_position_raises_exception(self):
         with self.assertRaises(UncoveredPositionError):
             self.segmentation.logr(chromosome='chr2', position=100)
-
-
-class TestBAF(unittest.TestCase):
-
-    def test_baf(self):
-        baf = BAF(chromosome='chr1', position=100, frequency=0.45)
-        self.assertEqual(baf.chromosome, 'chr1')
-        self.assertEqual(baf.position, 100)
-        self.assertEqual(baf.frequency, 0.45)
