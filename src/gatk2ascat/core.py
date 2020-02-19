@@ -33,6 +33,9 @@ class ASCATDataPoint(NamedTuple):
     def name(self) -> str:
         return self.chromosome + '_' + str(self.position)
 
+    def __str__(self) -> str:
+        return '\t'.join([f'{self.chromosome}_{self.position}', self.chromosome, str(self.position), str(self.value)])
+
 
 class Segmentation:
 
