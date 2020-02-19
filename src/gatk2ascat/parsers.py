@@ -3,6 +3,7 @@ from typing import List
 
 from gatk2ascat.core import Segment
 from gatk2ascat.core import Segmentation
+from gatk2ascat.core import SNP
 
 
 def parse_segments(stream: Iterable[str]) -> Segmentation:
@@ -33,3 +34,7 @@ def parse_segments(stream: Iterable[str]) -> Segmentation:
         segments.append(segment)
 
     return Segmentation(segments=segments)
+
+
+def parse_snps(stream: Iterable[str]) -> List[SNP]:
+    pass
