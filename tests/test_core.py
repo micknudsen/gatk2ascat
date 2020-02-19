@@ -1,6 +1,7 @@
 import unittest
 
 from gatk2ascat.core import BAF
+from gatk2ascat.core import ASCATDataPoint
 from gatk2ascat.core import Segment
 from gatk2ascat.core import Segmentation
 
@@ -9,7 +10,7 @@ from gatk2ascat.core import generate_ascat_input
 from gatk2ascat.exceptions import UncoveredPositionError
 
 
-class TestBAF(unittest.TestCase):
+class TestSimpleStructures(unittest.TestCase):
 
     def test_baf(self):
         baf = BAF(chromosome='chr1', position=100, frequency=0.45)
@@ -17,15 +18,19 @@ class TestBAF(unittest.TestCase):
         self.assertEqual(baf.position, 100)
         self.assertEqual(baf.frequency, 0.45)
 
-
-class TestSegment(unittest.TestCase):
-
     def test_segment(self):
         segment = Segment(chromosome='chr2', start=100, end=200, logr=0.5)
         self.assertEqual(segment.chromosome, 'chr2')
         self.assertEqual(segment.start, 100)
         self.assertEqual(segment.end, 200)
         self.assertEqual(segment.logr, 0.5)
+
+    def test_ascat_data_point(self):
+        data_point = ASCATDataPoint(chromosome='chr1', position=100, value=3.2)
+        self.assertEqual(data_point.chromosome, 'chr1')
+        self.assertEqual(data_point.position, 100)
+        self.assertEqual(data_point.value, 3.2)
+        self.assertEqual(data_point.name, 'chr1_100')
 
 
 class TestSegmentation(unittest.TestCase):
