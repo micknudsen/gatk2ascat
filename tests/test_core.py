@@ -72,7 +72,7 @@ class TestOutputGenerator(unittest.TestCase):
                             BAF(chromosome='chr1', position=175, frequency=0.55),
                             BAF(chromosome='chr2', position=300, frequency=0.43)]
 
-    def test_generate_ascat_input(self):
+    def test_generate_ascat_input_with_segmentation(self):
 
         ascat_baf, ascat_logr = zip(*generate_ascat_input(bafs=self.tumor_bafs, segmentation=self.segmentation))
 
@@ -83,3 +83,15 @@ class TestOutputGenerator(unittest.TestCase):
         self.assertEqual(ascat_logr, (ASCATDataPoint(chromosome='chr1', position=150, value=0.5),
                                       ASCATDataPoint(chromosome='chr1', position=175, value=0.5),
                                       ASCATDataPoint(chromosome='chr2', position=300, value=-0.7)))
+
+    def test_generate_ascat_input_without_segmentation(self):
+
+        ascat_baf, ascat_logr = zip(*generate_ascat_input(bafs=self.normal_bafs))
+
+        self.assertEqual(ascat_baf, (ASCATDataPoint(chromosome='chr1', position=150, value=0.5),
+                                     ASCATDataPoint(chromosome='chr1', position=175, value=0.55),
+                                     ASCATDataPoint(chromosome='chr2', position=300, value=0.43)))
+
+        self.assertEqual(ascat_logr, (ASCATDataPoint(chromosome='chr1', position=150, value=0.0),
+                                      ASCATDataPoint(chromosome='chr1', position=175, value=0.0),
+                                      ASCATDataPoint(chromosome='chr2', position=300, value=-0.0)))
