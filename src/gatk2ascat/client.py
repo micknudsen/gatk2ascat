@@ -1,9 +1,28 @@
 import argparse
 
+from typing import List
+from typing import Optional
+
+from gatk2ascat.core import BAF
+from gatk2ascat.core import Segmentation
+
 from gatk2ascat.core import generate_ascat_input
 
 from gatk2ascat.parsers import parse_bafs
 from gatk2ascat.parsers import parse_segments
+
+
+def write_to_files(ascat_baf_file: str, ascat_logr_file: str, bafs: List[BAF], segmentation: Optional[Segmentation] = None):
+
+    with open(ascat_baf_file, 'w') as baf_file, open(ascat_logr_file, 'w') as logr_file:
+
+        header = '\t'.join(['', 'chromosome', 'position', 'SAMPLE_NAME'])
+        print(header, file=baf_file)
+        print(header, file=logr_file)
+
+        for baf_entry, logr_entry in generate_ascat_input(bafs=bafs, segmentation=segmentation):
+            print(baf_entry, file=baf_file)
+            print(logr_entry, file=logr_file)
 
 
 def main():
@@ -32,20 +51,5 @@ def main():
     with open(args.allelic_counts_normal, 'r') as f:
         normal_bafs = parse_bafs(stream=f)
 
-    with open(args.ascat_baf_tumor, 'w') as baf_file, open(args.ascat_logr_tumor, 'w') as logr_file:
-
-        print('', 'chromosome', 'position', 'tumor', sep='\t', file=baf_file)
-        print('', 'chromosome', 'position', 'tumor', sep='\t', file=logr_file)
-
-        for baf_entry, logr_entry in generate_ascat_input(bafs=tumor_bafs, segmentation=segmentation):
-            print(baf_entry, file=baf_file)
-            print(logr_entry, file=logr_file)
-
-    with open(args.ascat_baf_normal, 'w') as baf_file, open(args.ascat_logr_normal, 'w') as logr_file:
-
-        print('', 'chromosome', 'position', 'normal', sep='\t', file=baf_file)
-        print('', 'chromosome', 'position', 'normal', sep='\t', file=logr_file)
-
-        for baf_entry, logr_entry in generate_ascat_input(bafs=normal_bafs):
-            print(baf_entry, file=baf_file)
-            print(logr_entry, file=logr_file)
+    write_to_files(ascat_baf_file=args.ascat_baf_tumor, ascat_logr_file=args.ascat_logr_tumor, bafs=tumor_bafs, segmentation=segmentation)
+    write_to_files(ascat_baf_file=args.ascat_baf_normal, ascat_logr_file=args.ascat_logr_normal, bafs=normal_bafs)
