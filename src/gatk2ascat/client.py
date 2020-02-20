@@ -13,11 +13,11 @@ from gatk2ascat.parsers import parse_bafs
 from gatk2ascat.parsers import parse_segments
 
 
-def write_to_files(ascat_baf_file: str, ascat_logr_file: str, bafs: List[BAF], segmentation: Optional[Segmentation] = None):
+def write_to_files(ascat_baf_file: str, ascat_logr_file: str, bafs: List[BAF], sample_name: str, segmentation: Optional[Segmentation] = None):
 
     with open(ascat_baf_file, 'w') as baf_file, open(ascat_logr_file, 'w') as logr_file:
 
-        header = '\t'.join(['', 'chromosome', 'position', 'SAMPLE_NAME'])
+        header = '\t'.join(['', 'chromosome', 'position', sample_name])
         print(header, file=baf_file)
         print(header, file=logr_file)
 
@@ -58,5 +58,5 @@ def main():
     with open(args.allelic_counts_normal, 'r') as f:
         normal_bafs = parse_bafs(stream=f)
 
-    write_to_files(ascat_baf_file=args.ascat_baf_tumor, ascat_logr_file=args.ascat_logr_tumor, bafs=tumor_bafs segmentation=segmentation)
-    write_to_files(ascat_baf_file=args.ascat_baf_normal, ascat_logr_file=args.ascat_logr_normal, bafs=normal_bafs)
+    write_to_files(ascat_baf_file=args.ascat_baf_tumor, ascat_logr_file=args.ascat_logr_tumor, bafs=tumor_bafs, sample_name=tumor_sample_name, segmentation=segmentation)
+    write_to_files(ascat_baf_file=args.ascat_baf_normal, ascat_logr_file=args.ascat_logr_normal, bafs=normal_bafs, sample_name=normal_sample_name)
