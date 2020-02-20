@@ -13,6 +13,11 @@ from gatk2ascat.parsers import parse_bafs
 from gatk2ascat.parsers import parse_segments
 
 
+def sample_name_from_gatk_output(file: str) -> str:
+    with open(file, 'r') as stream:
+        return get_sample_name(stream=stream)
+
+
 def write_to_files(ascat_baf_file: str, ascat_logr_file: str, bafs: List[BAF], sample_name: str, segmentation: Optional[Segmentation] = None):
 
     with open(ascat_baf_file, 'w') as baf_file, open(ascat_logr_file, 'w') as logr_file:
@@ -43,11 +48,8 @@ def main():
 
     args = parser.parse_args()
 
-    with open(args.allelic_counts_tumor, 'r') as f:
-        tumor_sample_name = get_sample_name(f)
-
-    with open(args.allelic_counts_normal, 'r') as f:
-        normal_sample_name = get_sample_name(f)
+    tumor_sample_name = sample_name_from_gatk_output(file=args.allelic_counts_tumor)
+    normal_sample_name = sample_name_from_gatk_output(file=args.allelic_counts_normal)
 
     with open(args.denoised_copy_ratios, 'r') as f:
         segmentation = parse_segments(stream=f)
