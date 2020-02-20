@@ -1,0 +1,24 @@
+package:
+  name: gatk2ascat
+  version: '0.1'
+
+source:
+  git_rev: v0.1
+  git_url: git@github.com:micknudsen/gatk2ascat.git
+
+build:
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+  number: 0
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+about:
+  home: https://github.com/micknudsen/gatk2ascat
+  license: MIT
+  summary: Convert GATK output to input for ASCAT
