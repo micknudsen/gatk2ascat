@@ -8,6 +8,7 @@ from gatk2ascat.core import Segmentation
 
 from gatk2ascat.core import generate_ascat_input
 
+from gatk2ascat.parsers import get_sample_name
 from gatk2ascat.parsers import parse_bafs
 from gatk2ascat.parsers import parse_segments
 
@@ -42,6 +43,12 @@ def main():
 
     args = parser.parse_args()
 
+    with open(args.allelic_counts_tumor, 'r') as f:
+        tumor_sample_name = get_sample_name(f)
+
+    with open(args.allelic_counts_normal, 'r') as f:
+        normal_sample_name = get_sample_name(f)
+
     with open(args.denoised_copy_ratios, 'r') as f:
         segmentation = parse_segments(stream=f)
 
@@ -51,5 +58,5 @@ def main():
     with open(args.allelic_counts_normal, 'r') as f:
         normal_bafs = parse_bafs(stream=f)
 
-    write_to_files(ascat_baf_file=args.ascat_baf_tumor, ascat_logr_file=args.ascat_logr_tumor, bafs=tumor_bafs, segmentation=segmentation)
+    write_to_files(ascat_baf_file=args.ascat_baf_tumor, ascat_logr_file=args.ascat_logr_tumor, bafs=tumor_bafs segmentation=segmentation)
     write_to_files(ascat_baf_file=args.ascat_baf_normal, ascat_logr_file=args.ascat_logr_normal, bafs=normal_bafs)
