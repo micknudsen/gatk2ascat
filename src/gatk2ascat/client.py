@@ -23,7 +23,7 @@ def bafs_from_gatk_output(file: str) -> List[BAF]:
         return parse_bafs(stream=stream)
 
 
-def write_to_files(ascat_baf_file: str, ascat_logr_file: str, bafs: List[BAF], sample_name: str, segmentation: Optional[Segmentation] = None):
+def write_to_files(ascat_baf_file: str, ascat_logr_file: str, bafs: List[BAF], sample_name: str, segmentation: Optional[Segmentation] = None) -> None:
 
     with open(ascat_baf_file, 'w') as baf_file, open(ascat_logr_file, 'w') as logr_file:
 
@@ -56,11 +56,11 @@ def main():
     tumor_sample_name = sample_name_from_gatk_output(file=args.allelic_counts_tumor)
     normal_sample_name = sample_name_from_gatk_output(file=args.allelic_counts_normal)
 
-    with open(args.denoised_copy_ratios, 'r') as f:
-        segmentation = parse_segments(stream=f)
-
     tumor_bafs = bafs_from_gatk_output(file=args.allelic_counts_tumor)
     normal_bafs = bafs_from_gatk_output(file=args.allelic_counts_normal)
+
+    with open(args.denoised_copy_ratios, 'r') as stream:
+        segmentation = parse_segments(stream=stream)
 
     write_to_files(ascat_baf_file=args.ascat_baf_tumor, ascat_logr_file=args.ascat_logr_tumor, bafs=tumor_bafs, sample_name=tumor_sample_name, segmentation=segmentation)
     write_to_files(ascat_baf_file=args.ascat_baf_normal, ascat_logr_file=args.ascat_logr_normal, bafs=normal_bafs, sample_name=normal_sample_name)
