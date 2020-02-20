@@ -10,7 +10,7 @@ Three files produced by GATK are needed as input. These are the allelic counts a
 
 ## Running
 
-The `gatk2ascat` command is the run as follows:
+The `gatk2ascat` command is then run as follows:
 
 ```
 gatk2ascat --denoised-copy-ratios SAMPLE.denoisedCR.tsv
