@@ -58,6 +58,10 @@ class Segmentation:
         raise UncoveredPositionError
 
 
+def get_consensus_bafs(tumor_bafs: List[BAF], normal_bafs: List[BAF]) -> Iterator[Tuple[BAF, BAF]]:
+    pass
+
+
 def generate_ascat_input(bafs: List[BAF], segmentation: Optional[Segmentation] = None) -> Iterator[Tuple[ASCATDataPoint, ASCATDataPoint]]:
     """Takes as input a list of BAF objects and an optional Segmentation object. Yields pairs
     of ASCATDataPoint objects with BAFs and LOGRs. If a Segmentation object is provided, LOGR
