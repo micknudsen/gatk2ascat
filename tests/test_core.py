@@ -69,13 +69,13 @@ class TestOutputGenerator(unittest.TestCase):
                                                    Segment(chromosome='chr1', start=201, end=350, logr=1.2),
                                                    Segment(chromosome='chr2', start=150, end=400, logr=-0.7)])
 
-        self.tumor_bafs = [BAF(chromosome='chr1', position=150, frequency=0.2),
-                           BAF(chromosome='chr1', position=175, frequency=0.15),
-                           BAF(chromosome='chr2', position=300, frequency=0.9)]
+        self.tumor_bafs = [BAF(chromosome='chr1', position=150, frequency=0.2, nucleotide='A'),
+                           BAF(chromosome='chr1', position=175, frequency=0.15, nucleotide='C'),
+                           BAF(chromosome='chr2', position=300, frequency=0.9, nucleotide='G')]
 
-        self.normal_bafs = [BAF(chromosome='chr1', position=150, frequency=0.5),
-                            BAF(chromosome='chr1', position=175, frequency=0.55),
-                            BAF(chromosome='chr2', position=300, frequency=0.43)]
+        self.normal_bafs = [BAF(chromosome='chr1', position=150, frequency=0.5, nucleotide='A'),
+                            BAF(chromosome='chr1', position=175, frequency=0.55, nucleotide='C'),
+                            BAF(chromosome='chr2', position=300, frequency=0.43, nucleotide='G')]
 
     def test_generate_ascat_input_with_segmentation(self):
 
