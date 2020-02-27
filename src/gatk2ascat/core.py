@@ -15,6 +15,7 @@ class BAF(NamedTuple):
     chromosome: str
     position: int
     frequency: float
+    nucleotide: str
 
 
 class Segment(NamedTuple):
