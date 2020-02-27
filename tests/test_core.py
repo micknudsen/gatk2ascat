@@ -77,8 +77,8 @@ class TestOutputGenerator(unittest.TestCase):
                            BAF(chromosome='chr2', position=300, ref_count=10, alt_count=90, ref_nucleotide='C', alt_nucleotide='G')]
 
         self.normal_bafs = [BAF(chromosome='chr1', position=150, ref_count=50, alt_count=50, ref_nucleotide='T', alt_nucleotide='A'),
-                            BAF(chromosome='chr1', position=175, ref_count=45, alt_count=55, ref_nucleotide='T', alt_nucleotide='A'),
-                            BAF(chromosome='chr2', position=300, ref_count=57, alt_count=43, ref_nucleotide='T', alt_nucleotide='A')]
+                            BAF(chromosome='chr1', position=175, ref_count=45, alt_count=55, ref_nucleotide='G', alt_nucleotide='C'),
+                            BAF(chromosome='chr2', position=300, ref_count=57, alt_count=43, ref_nucleotide='C', alt_nucleotide='G')]
 
     def test_generate_ascat_input_with_segmentation(self):
 
