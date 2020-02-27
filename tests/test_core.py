@@ -6,6 +6,7 @@ from gatk2ascat.core import Segment
 from gatk2ascat.core import Segmentation
 
 from gatk2ascat.core import generate_ascat_input
+from gatk2ascat.core import get_consensus_bafs
 
 from gatk2ascat.exceptions import UncoveredPositionError
 
@@ -62,6 +63,26 @@ class TestSegmentation(unittest.TestCase):
     def test_get_logr_for_uncovered_position_raises_exception(self):
         with self.assertRaises(UncoveredPositionError):
             self.segmentation.logr(chromosome='chr2', position=100)
+
+
+class TestConsensusBAFs(unittest.TestCase):
+
+    def setUp(self):
+
+        self.tumor_bafs = [BAF(chromosome='chr1', position=150, ref_count=80, alt_count=20, ref_nucleotide='T', alt_nucleotide='G'),
+                           BAF(chromosome='chr1', position=175, ref_count=85, alt_count=15, ref_nucleotide='G', alt_nucleotide='C'),
+                           BAF(chromosome='chr2', position=300, ref_count=10, alt_count=90, ref_nucleotide='C', alt_nucleotide='G')]
+
+        self.normal_bafs = [BAF(chromosome='chr1', position=150, ref_count=50, alt_count=50, ref_nucleotide='T', alt_nucleotide='A'),
+                            BAF(chromosome='chr1', position=175, ref_count=45, alt_count=55, ref_nucleotide='G', alt_nucleotide='C'),
+                            BAF(chromosome='chr2', position=300, ref_count=57, alt_count=43, ref_nucleotide='A', alt_nucleotide='G')]
+
+    def test_consensus_bafs(self):
+
+        consensus_tumor_bafs, consensus_normal_bafs = get_consensus_bafs(tumor_bafs=self.tumor_bafs, normal_bafs=self.normal_bafs)
+
+        self.assertEqual(list(consensus_tumor_bafs), [BAF(chromosome='chr1', position=175, ref_count=85, alt_count=15, ref_nucleotide='G', alt_nucleotide='C')])
+        self.assertEqual(list(consensus_normal_bafs), [BAF(chromosome='chr1', position=175, ref_count=45, alt_count=55, ref_nucleotide='G', alt_nucleotide='C')])
 
 
 class TestOutputGenerator(unittest.TestCase):
