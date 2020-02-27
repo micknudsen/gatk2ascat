@@ -13,10 +13,11 @@ from gatk2ascat.exceptions import UncoveredPositionError
 class TestSimpleStructures(unittest.TestCase):
 
     def test_baf(self):
-        baf = BAF(chromosome='chr1', position=100, frequency=0.45)
+        baf = BAF(chromosome='chr1', position=100, frequency=0.45, nucleotide='T')
         self.assertEqual(baf.chromosome, 'chr1')
         self.assertEqual(baf.position, 100)
         self.assertEqual(baf.frequency, 0.45)
+        self.assertEqual(baf.nucleotide, 'T')
 
     def test_segment(self):
         segment = Segment(chromosome='chr2', start=100, end=200, logr=0.5)
