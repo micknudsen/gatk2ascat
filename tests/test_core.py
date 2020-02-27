@@ -79,10 +79,7 @@ class TestConsensusBAFs(unittest.TestCase):
 
     def test_consensus_bafs(self):
 
-        consensus_baf_pairs = list(get_consensus_bafs(tumor_bafs=self.tumor_bafs, normal_bafs=self.normal_bafs))
-
-        consensus_tumor_bafs = [pair[0] for pair in consensus_baf_pairs]
-        consensus_normal_bafs = [pair[1] for pair in consensus_baf_pairs]
+        consensus_tumor_bafs, consensus_normal_bafs = get_consensus_bafs(tumor_bafs=self.tumor_bafs, normal_bafs=self.normal_bafs)
 
         self.assertEqual(list(consensus_tumor_bafs), [BAF(chromosome='chr1', position=175, ref_count=85, alt_count=15, ref_nucleotide='G', alt_nucleotide='C')])
         self.assertEqual(list(consensus_normal_bafs), [BAF(chromosome='chr1', position=175, ref_count=45, alt_count=55, ref_nucleotide='G', alt_nucleotide='C')])
