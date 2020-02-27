@@ -13,11 +13,11 @@ from gatk2ascat.exceptions import UncoveredPositionError
 class TestSimpleStructures(unittest.TestCase):
 
     def test_baf(self):
-        baf = BAF(chromosome='chr1', position=100, frequency=0.45, nucleotide='T')
+        baf = BAF(chromosome='chr1', position=100, frequency=0.45, alt_nucleotide='T')
         self.assertEqual(baf.chromosome, 'chr1')
         self.assertEqual(baf.position, 100)
         self.assertEqual(baf.frequency, 0.45)
-        self.assertEqual(baf.nucleotide, 'T')
+        self.assertEqual(baf.alt_nucleotide, 'T')
 
     def test_segment(self):
         segment = Segment(chromosome='chr2', start=100, end=200, logr=0.5)
@@ -69,13 +69,13 @@ class TestOutputGenerator(unittest.TestCase):
                                                    Segment(chromosome='chr1', start=201, end=350, logr=1.2),
                                                    Segment(chromosome='chr2', start=150, end=400, logr=-0.7)])
 
-        self.tumor_bafs = [BAF(chromosome='chr1', position=150, frequency=0.2, nucleotide='A'),
-                           BAF(chromosome='chr1', position=175, frequency=0.15, nucleotide='C'),
-                           BAF(chromosome='chr2', position=300, frequency=0.9, nucleotide='G')]
+        self.tumor_bafs = [BAF(chromosome='chr1', position=150, frequency=0.2, alt_nucleotide='A'),
+                           BAF(chromosome='chr1', position=175, frequency=0.15, alt_nucleotide='C'),
+                           BAF(chromosome='chr2', position=300, frequency=0.9, alt_nucleotide='G')]
 
-        self.normal_bafs = [BAF(chromosome='chr1', position=150, frequency=0.5, nucleotide='A'),
-                            BAF(chromosome='chr1', position=175, frequency=0.55, nucleotide='C'),
-                            BAF(chromosome='chr2', position=300, frequency=0.43, nucleotide='G')]
+        self.normal_bafs = [BAF(chromosome='chr1', position=150, frequency=0.5, alt_nucleotide='A'),
+                            BAF(chromosome='chr1', position=175, frequency=0.55, alt_nucleotide='C'),
+                            BAF(chromosome='chr2', position=300, frequency=0.43, alt_nucleotide='G')]
 
     def test_generate_ascat_input_with_segmentation(self):
 

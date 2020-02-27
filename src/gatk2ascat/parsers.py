@@ -46,7 +46,7 @@ def parse_bafs(stream: Iterator[str]) -> List[BAF]:
 
     for line in stream:
         chromosome, position, ref_count, alt_count, _, alt_nucleotide = line.split('\t')
-        baf = BAF(chromosome=chromosome, position=int(position), frequency=float(alt_count) / (float(ref_count) + float(alt_count)), nucleotide=alt_nucleotide)
+        baf = BAF(chromosome=chromosome, position=int(position), frequency=float(alt_count) / (float(ref_count) + float(alt_count)), alt_nucleotide=alt_nucleotide)
         bafs.append(baf)
 
     return bafs
