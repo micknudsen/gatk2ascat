@@ -58,15 +58,21 @@ class Segmentation:
         raise UncoveredPositionError
 
 
-def get_consensus_bafs(tumor_bafs: List[BAF], normal_bafs: List[BAF]) -> Iterator[Tuple[BAF, BAF]]:
-    """Takes as input lists of tumor BAF objects and normal BAF objects. Yields pairs
+def get_consensus_bafs(tumor_bafs: List[BAF], normal_bafs: List[BAF]) -> Tuple[List[BAF], List[BAF]]:
+    """Takes as input lists of tumor BAF objects and normal BAF objects. Return pair of lists
     of BAF objects for which tumor and normal agree on both ref and alt nucleotides. This
     function assumes that both inputs contain the same sites in the same order."""
+
+    consensus_tumor_bafs = []
+    consensus_normal_bafs = []
 
     for tumor_baf, normal_baf in zip(tumor_bafs, normal_bafs):
         if all([tumor_baf.ref_nucleotide == normal_baf.ref_nucleotide,
                 tumor_baf.alt_nucleotide == normal_baf.alt_nucleotide]):
-            yield tumor_baf, normal_baf
+            consensus_tumor_bafs.append(tumor_baf)
+            consensus_normal_bafs.append(normal_baf)
+
+    return consensus_tumor_bafs, consensus_normal_bafs
 
 
 def generate_ascat_input(bafs: List[BAF], segmentation: Optional[Segmentation] = None) -> Iterator[Tuple[ASCATDataPoint, ASCATDataPoint]]:
