@@ -62,9 +62,9 @@ class TestParsers(unittest.TestCase):
 
         bafs = parse_bafs(stream=stream)
 
-        self.assertEqual(bafs, [BAF(chromosome='chr1', position=150, frequency=0.9, alt_nucleotide='G'),
-                                BAF(chromosome='chr1', position=700, frequency=1.0, alt_nucleotide='C'),
-                                BAF(chromosome='chr2', position=100, frequency=0.625, alt_nucleotide='A')])
+        self.assertEqual(bafs, [BAF(chromosome='chr1', position=150, ref_count=10, alt_count=90, ref_nucleotide='A', alt_nucleotide='G'),
+                                BAF(chromosome='chr1', position=700, ref_count=0, alt_count=30, ref_nucleotide='T', alt_nucleotide='C'),
+                                BAF(chromosome='chr2', position=100, ref_count=30, alt_count=50, ref_nucleotide='G', alt_nucleotide='A')])
 
     def test_get_sample_name(self):
 
