@@ -7,6 +7,7 @@ from gatk2ascat.core import BAF
 from gatk2ascat.core import Segmentation
 
 from gatk2ascat.core import generate_ascat_input
+from gatk2ascat.core import get_consensus_bafs
 
 from gatk2ascat.parsers import get_sample_name
 from gatk2ascat.parsers import parse_bafs
@@ -59,8 +60,10 @@ def main():
     tumor_bafs = bafs_from_gatk_output(file=args.allelic_counts_tumor)
     normal_bafs = bafs_from_gatk_output(file=args.allelic_counts_normal)
 
+    consensus_tumor_bafs, conensus_normal_bafs = get_consensus_bafs(tumor_bafs=tumor_bafs, normal_bafs=normal_bafs)
+
     with open(args.denoised_copy_ratios, 'r') as stream:
         segmentation = parse_segments(stream=stream)
 
-    write_to_files(ascat_baf_file=args.ascat_baf_tumor, ascat_logr_file=args.ascat_logr_tumor, bafs=tumor_bafs, sample_name=tumor_sample_name, segmentation=segmentation)
-    write_to_files(ascat_baf_file=args.ascat_baf_normal, ascat_logr_file=args.ascat_logr_normal, bafs=normal_bafs, sample_name=normal_sample_name)
+    write_to_files(ascat_baf_file=args.ascat_baf_tumor, ascat_logr_file=args.ascat_logr_tumor, bafs=consensus_tumor_bafs, sample_name=tumor_sample_name, segmentation=segmentation)
+    write_to_files(ascat_baf_file=args.ascat_baf_normal, ascat_logr_file=args.ascat_logr_normal, bafs=conensus_normal_bafs, sample_name=normal_sample_name)
