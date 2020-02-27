@@ -14,8 +14,14 @@ from gatk2ascat.exceptions import UncoveredPositionError
 class BAF(NamedTuple):
     chromosome: str
     position: int
-    frequency: float
+    ref_count: int
+    alt_count: int
+    ref_nucleotide: str
     alt_nucleotide: str
+
+    @property
+    def frequency(self):
+        return self.alt_count / (self.ref_count + self.alt_count)
 
 
 class Segment(NamedTuple):
