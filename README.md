@@ -1,4 +1,4 @@
-[![install with conda](https://img.shields.io/badge/install%20with-conda-brightgreen.svg?style=flat)](https://conda.anaconda.org/micknudsen) [![Build Status](https://travis-ci.org/micknudsen/gatk2ascat.svg?branch=master)](https://travis-ci.org/micknudsen/gatk2ascat) [![Coverage Status](https://coveralls.io/repos/github/micknudsen/gatk2ascat/badge.svg?branch=master)](https://coveralls.io/github/micknudsen/gatk2ascat?branch=master)
+[![install with conda](https://img.shields.io/badge/install%20with-conda-brightgreen.svg?style=flat)](https://conda.anaconda.org/micknudsen) ![CI](https://github.com/micknudsen/gatk2ascat/workflows/CI/badge.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/micknudsen/gatk2ascat/badge.svg?branch=master)](https://coveralls.io/github/micknudsen/gatk2ascat?branch=master)
 
 # gatk2ascat
 
