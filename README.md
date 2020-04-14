@@ -1,4 +1,4 @@
-[![install with conda](https://anaconda.org/micknudsen/gatk2ascat/badges/version.svg)](https://anaconda.org/micknudsen/snpahoy) ![CI](https://github.com/micknudsen/gatk2ascat/workflows/CI/badge.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/micknudsen/gatk2ascat/badge.svg?branch=master)](https://coveralls.io/github/micknudsen/gatk2ascat?branch=master)
+[![install with conda](https://anaconda.org/micknudsen/gatk2ascat/badges/version.svg)](https://anaconda.org/micknudsen/gatk2ascat) ![CI](https://github.com/micknudsen/gatk2ascat/workflows/CI/badge.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/micknudsen/gatk2ascat/badge.svg?branch=master)](https://coveralls.io/github/micknudsen/gatk2ascat?branch=master)
 
 # gatk2ascat
 
