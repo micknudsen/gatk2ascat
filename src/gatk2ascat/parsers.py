@@ -9,7 +9,7 @@ from gatk2ascat.exceptions import ReadGroupError
 
 
 def skip_header(stream: Iterator[str]) -> None:
-    """Expecst an iterator of lines of GATK output. Fast-forwards the
+    """Expects an iterator of lines of GATK output. Fast-forwards the
     iterator by skipping the SAM-style header comprising lines starting
     with @ and the following line, which contains column names."""
     for line in stream:
