@@ -59,7 +59,7 @@ class Segmentation:
 
 
 def get_consensus_bafs(tumor_bafs: List[BAF], normal_bafs: List[BAF]) -> Tuple[List[BAF], List[BAF]]:
-    """Takes as input lists of tumor BAF objects and normal BAF objects. Return pair of lists
+    """Takes as input lists of tumor BAF objects and normal BAF objects. Returns pair of lists
     of BAF objects for which tumor and normal agree on both ref and alt nucleotides. This
     function assumes that both inputs contain the same sites in the same order."""
 
